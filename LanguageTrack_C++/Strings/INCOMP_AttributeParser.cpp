@@ -39,9 +39,11 @@ The closing tags follow the format:
 #include <string>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
 
 int main(){
     short n,q;
+    std::unordered_map<std::string,std::string> hashtable;
     std::cin >> n >> q;
 
     // HDML source
@@ -50,12 +52,21 @@ int main(){
         std::cin.ignore();
         getline(std::cin,input);
         std::stringstream stream(input);
-        std::vector<std::string> input_vector;
+        
         while(getline(stream,temp,' ')){
-            input_vector.push_back(temp);
-        }
-        for(int j=0; j<input_vector.size();j++){
-            std::cout << input_vector[j] << std::endl;
+            std::string key_tag;
+            std::string key_attr;
+            std::string attr_value; 
+            if(temp[0]=='<'){
+                if(temp[1]=='/'){
+                    (key_tag.find('.')) ? (key_tag.erase(key_tag.rfind('.'),key_tag.length()-1)) : key_tag="";
+                }else{
+                    (key_tag.empty()) ? (key_tag=temp.substr(1)) : (key_tag+="."+temp.substr(1));
+                }
+                std::cout<<"KEY TAG: "<<key_tag<<std::endl;
+            }else{
+                //Handle attribute assignment
+            }
         }
     }
     
