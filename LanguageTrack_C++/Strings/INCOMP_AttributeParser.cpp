@@ -38,22 +38,28 @@ The closing tags follow the format:
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 int main(){
     short n,q;
-    char ch;
-    string input;
     std::cin >> n >> q;
 
     // HDML source
     for(int i=0; i<n; i++){
-        std:;input="";
-        while(std::cin >> ch){
-            input+=ch;
+        std::string input,temp;
+        std::cin.ignore();
+        getline(std::cin,input);
+        std::stringstream stream(input);
+        std::vector<std::string> input_vector;
+        while(getline(stream,temp,' ')){
+            input_vector.push_back(temp);
         }
-
-
-
+        for(int j=0; j<input_vector.size();j++){
+            std::cout << input_vector[j] << std::endl;
+        }
+    }
+    
     // Queries
     for(int i=0; i<q; i++){
     }
+}
