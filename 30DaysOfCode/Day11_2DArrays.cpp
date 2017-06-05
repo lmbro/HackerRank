@@ -31,12 +31,13 @@ Constraints
 
 #include <iostream>
 #include <vector>
+#include <climits>
 
 int hourglassSum(int loc_i, int loc_j, std::vector< std::vector<int> > *array);
 
 int main(){
     int sum;
-    int max_sum=0;
+    int max_sum=INT_MIN;
     std::vector< std::vector<int> > array(6,std::vector<int>(6));
     for(int i=0; i<6; i++){
         for(int j=0; j<6; j++){
@@ -54,6 +55,7 @@ int main(){
 
     for(int i=0; i<4; i++){
         for(int j=0; j<4; j++){
+            std::cout<<"Current Max: "<<max_sum<<std::endl;
             sum = hourglassSum(i,j,&array);
             if(sum>max_sum) max_sum=sum;
         }
