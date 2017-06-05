@@ -37,30 +37,22 @@ int hourglassSum(int loc_i, int loc_j, std::vector< std::vector<int> > *array);
 
 int main(){
     int sum;
-    int max_sum=INT_MIN;
+    int max_sum=INT_MIN; // INT_MIN from <climits>, added to handle max_sum<0 case
     std::vector< std::vector<int> > array(6,std::vector<int>(6));
     for(int i=0; i<6; i++){
         for(int j=0; j<6; j++){
             std::cin >> array[i][j];
         }
     }
-    
-    std::cout << "\n\nInput Received" << std::endl;
-    for(int i=0; i<6; i++){
-        for(int j=0; j<6; j++){
-            std::cout << array[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
-
+    // Loops could be combined, but in this case readability >> performance concerns.
     for(int i=0; i<4; i++){
         for(int j=0; j<4; j++){
-            std::cout<<"Current Max: "<<max_sum<<std::endl;
             sum = hourglassSum(i,j,&array);
             if(sum>max_sum) max_sum=sum;
         }
     }
-    std::cout << "\n\nMax Sum: " << max_sum << std::endl;
+    
+    std::cout << max_sum << std::endl;
     return 0;
 }
 
@@ -68,7 +60,6 @@ int hourglassSum(int loc_i, int loc_j, std::vector< std::vector<int> > *array){
     int hg_sum=0;
     for (int j=loc_j; j<loc_j+3; j++) hg_sum += (*array)[loc_i][j] + (*array)[loc_i+2][j];
     hg_sum += ((*array)[loc_i+1][loc_j+1]);
-    std::cout << "Hourglass " << loc_i << " " << loc_j << " sum: " << hg_sum << std::endl;
     return hg_sum;
 }
 
