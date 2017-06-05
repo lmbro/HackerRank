@@ -23,26 +23,35 @@ void readLineHDML(std::unordered_map<std::string,std::string> &hash){
 
     std::string source, temp;
     std::string tag, attribute, value;
+    bool att_val_flag = true; // True = attribute, false = value
 
     getline(std::cin,source);
     std::stringstream sourcestream(source);
 
-    std::cout << source << std::endl;
+    //DEBUGstd::cout << source << std::endl;
     while(getline(sourcestream, temp, ' ')){
         if(temp[0]=='<'){ // Tag
             temp = temp.substr(1,temp.length()-2);
             if(temp[0]=='/'){ //Closing tag
-                std::cout << temp << " : Closing tag" << std::endl;
+                //DEBUGstd::cout << temp << " : Closing tag" << std::endl;
                 (tag==temp.substr(1)) ? (tag.erase()) : (tag = tag.substr(0,tag.length()-temp.length()));
-                std::cout << "Tag Name: " << tag << std::endl;
+                //DEBUGstd::cout << "Tag Name: " << tag << std::endl;
             }else{ // Opening tag
-                std::cout << temp << " : Opening tag" << std::endl;
+                //DEBUGstd::cout << temp << " : Opening tag" << std::endl;
                 (tag.empty()) ? (tag=temp) : (tag+='.'+temp);
-                std::cout << "Tag Name: " << tag << std::endl;
+                //DEBUGstd::cout << "Tag Name: " << tag << std::endl;
             }
         }else{  // Attribute assignment
-            std::cout << temp << " : Attribute assignment" << std::endl;
+            //DEBUGstd::cout << temp << " : Attribute assignment" << std::endl;
+            if(temp=="=") continue;
+            if(att_val_flag){
+                attribute=temp;
+                att_val_flag=false;
+            }else{
+                hash[tag+"~"+attribute]=temp;
+                att_val_flag=true;
+                std::cout << tag+"~"+attribute << " = " << hash[tag+"~"+attribute] << std::endl;
+            }         
         }
     }
-
 }
