@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 void readHDML(int n, std::unordered_map<std::string,std::string> &hash);
+void processTag(std::string source_tag, std::string &master_tag);
 
 int main(){
     int n,q;
@@ -45,13 +46,7 @@ void readHDML(int n, std::unordered_map<std::string,std::string> &hash){
 
         while(getline(sourcestream,temp,' ')){
             if(temp[0]=='<'){ // Tag
-                temp = temp.substr(1); // Remove leading <
-                if(temp[0]=='/'){ // Closing tag
-                    (tag==temp.substr(1)) ? (tag.erase()) : (tag=tag.substr(0,1+tag.length()-temp.length())); // Removes temp from tag name
-                }else{
-                    if(temp[temp.length()-1]=='>') (temp=temp.substr(0,temp.length()-1)); // Isolated opening tag (i.e. <tag1>)
-                    (tag.empty()) ? (tag=temp) : (tag+='.'+temp);
-                }
+                processTag(temp,tag);
             }else{
                 if(temp=="=") continue; // Don't process =
                 if(att_val_flag){
@@ -67,4 +62,19 @@ void readHDML(int n, std::unordered_map<std::string,std::string> &hash){
     }
 }
 
-
+void processTag(std::string source_tag, std::string &master_tag){
+    if(source_tag[1]=='/'){
+        if(master_tag.rfind(".")==std::string::npos){
+            master_tag.clear();
+        }else{
+            master_tag.erase(master_tag.rfind("."));
+        }
+    }else{
+        if(source_tag[source_tag.length()-1]=='>') source_tag.erase(source_tag.length()-1);
+        if(master_tag.empty()){
+            master_tag = source_tag.substr(1);
+        }else{
+            master_tag.append("." + source_tag.substr(1));
+        }
+    }
+}
