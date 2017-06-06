@@ -47,8 +47,9 @@ void readHDML(int n, std::unordered_map<std::string,std::string> &hash){
             if(temp[0]=='<'){ // Tag
                 temp = temp.substr(1); // Remove leading <
                 if(temp[0]=='/'){ // Closing tag
-                    (tag==temp.substr(1)) ? (tag.erase()) : (tag=tag.substr(0,tag.length()-temp.length())); // Removes temp from tag name
+                    (tag==temp.substr(1)) ? (tag.erase()) : (tag=tag.substr(0,1+tag.length()-temp.length())); // Removes temp from tag name
                 }else{
+                    if(temp[temp.length()-1]=='>') (temp=temp.substr(0,temp.length()-1)); // Isolated opening tag (i.e. <tag1>)
                     (tag.empty()) ? (tag=temp) : (tag+='.'+temp);
                 }
             }else{
