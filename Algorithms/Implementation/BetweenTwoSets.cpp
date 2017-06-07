@@ -26,37 +26,46 @@ int main(){
     std::cin >> n >> m;
 
     short a[n],b[m];
-    short a_max=1;
-    short a_min=100;
+    short b_max=0;
+    std::vector<short> x_vector;
 
-    std::vector<int> x_vector;
-
-    // All elements in A are factors of x
-    // x is a factor of all elements in B
-    // find the number of possible x's
+    // Build sets A and B
     for(int i=0; i<n; i++){
         std::cin >> a[i];
-        if(a[i]>a_max) a_max=a[i];
-        if(a[i]<a_min) a_min=a[i];
     }
     for(int i=0; i<m; i++){
         std::cin >> b[i];
+        if( b[i] > b_max ) b_max=b[i];
     }  
-    
-    // Elements in A that are factors of x
-    for(int x=a_min; x<=a_max; x++){
-        for(int i=0; i<n; i++){
-            if(x%a[i] == 0) x_vector.push_back(x);
-        }
+    // Find factors of the largest value is set B
+    for(int x=1; x<=b_max; x++){
+        if( b_max % x == 0 ) x_vector.push_back(x);
     }
+    // Remove values of x that are not factors of all other elements in B
     for(int i=0; i<m; i++){
-        for(int x=0; x<x_vector.size(); x++){
-            if(b[i] % x_vector[x] != 0) x_vector.erase(x_vector.begin() + x);
+        std::vector<int>::size_type x=0;
+        while( x < x_vector.size() ){
+            if( b[i] % x_vector[x] != 0 ){
+                x_vector.erase( x_vector.begin() + x );
+            } else {
+                x++;
+            }
         }
     }
-    
+    // Remove values of x that are not multiples of all elements in A
+    for(int i=0; i<n; i++){
+        std::vector<int>::size_type x=0;
+        while (x < x_vector.size() ){
+            if ( x_vector[x] % a[i] != 0 ){
+                x_vector.erase( x_vector.begin() + x);
+            } else {
+                x++;
+            }
+        }
+    }
+    // Print the number of integers between sets A and B
     std::cout << x_vector.size() << std::endl;
-    
+  
     return 0;
 }
 /*
@@ -67,4 +76,13 @@ INPUT SAMPLE
 
 EXPECTED OUTPUT
 3
+
+
+INPUT SAMPLE
+3 2
+3 9 6
+36 72
+
+EXPECTED OUTPUT
+2
 */
