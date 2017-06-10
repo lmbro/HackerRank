@@ -25,7 +25,7 @@ Print the total number of matching pairs of socks that John can sell
 
 int main(){
 
-    short n, c;
+    short n, c, pairs = 0;
     std::scanf("%hd", &n);
     std::map<short, short> sock_count;
 
@@ -35,9 +35,10 @@ int main(){
     }
 
     for(std::map<short,short>::iterator it=sock_count.begin(); it != sock_count.end(); it++){
-        std::printf("Key:%hd, Value:%hd\n", it->first, it->second);       
+        pairs += (it->second)/2;
+        //std::printf("Key: %hd, Value: %hd, Pairs: %hd\n", it->first, it->second, pairs);       
     }
-
+    std::printf("%hd\n",pairs);
     return 0;
 }
         
