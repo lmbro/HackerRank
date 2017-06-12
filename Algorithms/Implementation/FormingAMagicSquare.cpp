@@ -19,23 +19,49 @@ Print an integer denoting the minimum cost of turning matrix s into a magic squa
 
 #include <cstdio>
 #include <vector>
-#include <map> 
+#include <algorithm>
 
-int findMagicNumber(const int r_sum[], const int c_sum[], const int d_sum[], int ignore=0);
-int fixMagicSquare(const std::vector< std::vector<int> > sq, const int r_sum[], const int c_sum[], const int d_sum[], int magic_num);
+class MagicSquare{
+    private:
+        std::vector< std::vector<int> > square;
+        int row_sum[3];
+        int col_sum[3];
+        int dia_sum[2];
+        int magic_num;
+        bool is_magic;
+    public:
+        MagicSquare();
+        
+        void setIndex(int i, int j, int val);
+        void setMagicNumber(int m);
+        void findSums();    
+        bool testMagic();
 
-int main() {
-    
-    // User-entered 3x3 matrix
-    std::vector< std::vector<int> > square(3, std::vector<int>(3));
+        int getIndex(int i, int j);
+        int getMagicNumber();
+        int getSum(char rcd, int i);
+        bool isMagic();
+
+        void printSquare();
+};
+
+MagicSquare::MagicSquare(){
     for(int i=0; i<3; i++){
-       std::scanf("%d %d %d", &square[i][0], &square[i][1], &square[i][2]);
+        square.push_back(std::vector<int>(3));
+        row_sum[i] = 0;
+        col_sum[i] = 0;
+        if( i == 2 ) break;
+        dia_sum[i] = 0;
     }
-
-    // Find sums of rows, columns, and diagonals
-    int row_sum[] = { 0, 0, 0 };    // Row 0 = top row
-    int col_sum[] = { 0, 0, 0 };    // Column 0 = left column
-    int dia_sum[] = { 0, 0 };       // Diagonal 0 = top left to bottom right ( (0,0) -> (2,2) )
+    is_magic = false;
+}
+void MagicSquare::setIndex(int i, int j, int val){
+    square[i][j] = val;
+}
+void MagicSquare::setMagicNumber(int m){
+    magic_num = m;
+}
+void MagicSquare::findSums(){
     for(int i=0; i<3; i++){
         for(int j=0; j<3; j++){
             row_sum[i] += square[i][j];
@@ -44,63 +70,100 @@ int main() {
     }
     dia_sum[0] = square[0][0] + square[1][1] + square[2][2];
     dia_sum[1] = square[2][0] + square[1][1] + square[0][2];
-
-    // Find Magic Number
-    int magic_number = findMagicNumber(row_sum, col_sum, dia_sum);
-    std::printf("Magic Number: %d\n", magic_number); // DEV PRINT
-
-    // Fix Magic Square
-    int cost = fixMagicSquare(square, row_sum, col_sum, dia_sum, magic_number); 
-
-    return 0;
 }
-
-int findMagicNumber(const int r_sum[], const int c_sum[], const int d_sum[], int ignore){
-    
-    int magic_num = 0, magic_count = 0;
-    static std::map<int, int> magic_nums;
-    
-    for(int i=0; i<3; i++){
-        magic_nums[r_sum[i]]++;
-        magic_nums[c_sum[i]]++;
-        if(i==2) break;
-        magic_nums[d_sum[i]]++;
+bool MagicSquare::testMagic(){
+    if( magic_num == 0 ){
+        is_magic = false;
+        return is_magic;
     }
-    for(std::map<int,int>::iterator it=magic_nums.begin(); it != magic_nums.end(); it++){
-        std::printf("%d: %d\n", it->first, it->second);
-        if( it->second > magic_count  &&  it->first != ignore ){
-            magic_num = it->first;
-            magic_count = it->second;
+    for(int i=0; i<3; i++){
+        if( row_sum[i] != magic_num || col_sum[i] != magic_num){
+            is_magic = false;
+            return is_magic;
+        }
+        if ( i == 2 ) break;
+        if (dia_sum[i] != magic_num){
+            is_magic = false;
+            return is_magic;
         }
     }
+    is_magic = true;
+    return is_magic;
+}
+int MagicSquare::getIndex(int i, int j){
+    return square[i][j];
+}
+int MagicSquare::getMagicNumber(){
     return magic_num;
 }
+int MagicSquare::getSum(char rcd, int i){
+    switch(rcd) {
+        case 'r':
+            return row_sum[i];
+            break;
+        case 'c':
+            return col_sum[i];
+            break;
+        case 'd':
+            return dia_sum[i];
+            break;
+        default:
+            return -1;
+            break;
+    }
+}
+bool MagicSquare::isMagic(){
+    return is_magic;
+}
+void MagicSquare::printSquare(){
+    std::puts("");
+    for(int i=0; i<3; i++){
+        std::printf("%d %d %d\n", square[i][0], square[i][1], square[i][2]);
+    }
+}
 
-int fixMagicSquare(const std::vector< std::vector<int> > sq, const int r_sum[], const int c_sum[], const int d_sum[], int magic_num){
-    std::puts("The Eagle has Landed"); // DEV PRINT
+
+int main(){
+
+    // Build input square
+    MagicSquare target;
+    for(int i=0; i<3; i++){
+        for(int j=0; j<3; j++){
+            int temp;
+            std::scanf("%d",&temp);
+            target.setIndex(i,j,temp);
+        }
+    }
     
-    // Find incorrect rows/columns
-    bool wrong_row[] = { false, false, false };
-    bool wrong_col[] = { false, false, false };
-    bool wrong_dia[] = { false, false };
-
+    // Find sums of rows/columns/diagonals of input square
+    target.findSums();
+    std::vector<int> sum_vector;
     for(int i=0; i<3; i++){
-        std::printf("%d %d %d\n", sq[i][0], sq[i][1], sq[i][2]); // DEV PRINT 
-        if( r_sum[i] != magic_num ) wrong_row[i]=true;
-        if( c_sum[i] != magic_num ) wrong_col[i]=true;
-        if( i == 2 ) break;
-        if( d_sum[i] != magic_num ) wrong_dia[i]=true;
-    }
-    // DEV PRINT LOOP
-    for(int i=0; i<3; i++){
-        if( wrong_row[i] ) std::printf("Wrong row: %d\n", i); 
-        if( wrong_col[i] ) std::printf("Wrong col: %d\n", i); 
-        if( i == 2 ) break;
-        if( wrong_dia[i] ) std::printf("Wrong dia: %d\n", i);
+        for(char c : {'r','c','d'} ){
+            // Break out of invalid getSum parameters
+            if( c == '0' ){
+                break;
+            } else if( c == 'd' && i == 2 ){
+                break;
+            }
+            if( sum_vector.empty() ) {
+                sum_vector.push_back( target.getSum(c,i) );
+            } else if( std::find( sum_vector.begin(), sum_vector.end(), target.getSum(c,i) ) == sum_vector.end() ){
+                sum_vector.push_back( target.getSum(c,i) );
+            }
+        }
     }
 
+    for(int i=0; i<sum_vector.size(); i++){
+        std::printf("Magic Number Test: %d\n", sum_vector[i]);
+        target.setMagicNumber(i);
+        target.testMagic();
+    }
+
+    target.printSquare();
     return 0;
 }
+    
 
 /*
 SAMPLE INPUT 0
