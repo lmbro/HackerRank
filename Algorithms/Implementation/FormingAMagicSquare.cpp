@@ -153,13 +153,6 @@ int main(){
             }
         }
     }
-
-    for(int i=0; i<sum_vector.size(); i++){
-        std::printf("Magic Number Test: %d\n", sum_vector[i]);
-        target.setMagicNumber(i);
-        target.testMagic();
-    }
-
     target.printSquare();
     return 0;
 }
