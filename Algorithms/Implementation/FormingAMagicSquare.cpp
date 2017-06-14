@@ -21,6 +21,9 @@ Print an integer denoting the minimum cost of turning matrix s into a magic squa
 #include <vector>
 #include <algorithm>
 
+struct coord{
+    int row, col;
+};
 class MagicSquare{
     private:
         std::vector< std::vector<int> > square;
@@ -36,7 +39,7 @@ class MagicSquare{
         void setMagicNumber(int m);
         void findSums();    
         bool testMagic();
-
+        std::vector<int> buildSumVector();
         int getIndex(int i, int j);
         int getMagicNumber();
         int getSum(char rcd, int i);
@@ -72,6 +75,7 @@ void MagicSquare::findSums(){
     dia_sum[1] = square[2][0] + square[1][1] + square[0][2];
 }
 bool MagicSquare::testMagic(){
+    this->findSums();
     if( magic_num == 0 ){
         is_magic = false;
         return is_magic;
@@ -89,6 +93,25 @@ bool MagicSquare::testMagic(){
     }
     is_magic = true;
     return is_magic;
+}
+std::vector<int> MagicSquare::buildSumVector(){
+    std::vector<int> sum_vector;
+    for(int i=0; i<3; i++){
+        for(char c : {'r','c','d'} ){
+            // Break out of invalid getSum parameters
+            if( c == '0' ){
+                break;
+            } else if( c == 'd' && i == 2 ){
+                break;
+            }
+            if( sum_vector.empty() ) {
+                sum_vector.push_back( this->getSum(c,i) );
+            } else if( std::find( sum_vector.begin(), sum_vector.end(), this->getSum(c,i) ) == sum_vector.end() ){
+                sum_vector.push_back( this->getSum(c,i) );
+            }
+        }
+    }
+    return sum_vector;
 }
 int MagicSquare::getIndex(int i, int j){
     return square[i][j];
@@ -116,9 +139,68 @@ bool MagicSquare::isMagic(){
     return is_magic;
 }
 void MagicSquare::printSquare(){
-    std::puts("");
     for(int i=0; i<3; i++){
         std::printf("%d %d %d\n", square[i][0], square[i][1], square[i][2]);
+    }
+}
+int old_fixMagicSquare(MagicSquare &target, MagicSquare &fixed, int magic_num){
+    std::puts("The Eagle has Landed");
+
+    int cost = 0;
+    for(int i=0; i<3; i++){
+        for(int j=0; j<3; j++){
+            if( target.getSum('r',i) == magic_num || target.getSum('c',j) == magic_num ){
+                // Don't change number, already in a correct row or number
+                fixed.setIndex( i, j, target.getIndex( i, j ) );
+            } else if( target.getSum('r',i) != magic_num ){
+                // Fix based on column
+                int temp = target.getIndex(i,j) + ( magic_num - target.getSum('c', j) );
+                if( temp > 9 ){
+                    temp = 9;
+                } else if( temp < 1 ){
+                    temp = 1;
+                }
+                fixed.setIndex( i, j, temp );
+                cost += std::abs( temp - target.getIndex(i,j) );
+            } else if( target.getSum('c',j) != magic_num ){
+                // Fix based on row
+                int temp = target.getIndex(i,j) + (magic_num - target.getSum('r', i));
+                if( temp > 9 ){
+                    temp = 9;
+                } else if( temp < 1 ){
+                    temp = 1;
+                }
+                fixed.setIndex( i, j, temp );
+                cost += std::abs( temp - target.getIndex( i, j) );
+            }
+        }
+    }
+    fixed.setMagicNumber(magic_num);
+    fixed.findSums();
+    if(fixed.testMagic()){
+        std::printf("Magic Number: %d\n",magic_num);
+        fixed.printSquare();
+        return cost;
+    } else {
+        std::printf("Failed Magic Number: %d\n", magic_num);
+        fixed.printSquare();
+        return 10000;
+    }
+}
+
+int fixMagicSquare(MagicSquare &target, MagicSquare &fixed, int magic_num){
+    std::vector<coord> points;
+    std::puts("Problem Points:");
+    for(int i=0; i<3; i++){
+        for(int j=0; j<3; j++){
+            if( target.getSum('r',i) != magic_num && target.getSum('c',j) != magic_num ){
+                coord temp;
+                temp.row=i;
+                temp.col=j;
+                points.push_back(temp);
+                std::printf("(%d,%d)\n",temp.row,temp.col);
+            }
+        }
     }
 }
 
@@ -133,27 +215,32 @@ int main(){
             std::scanf("%d",&temp);
             target.setIndex(i,j,temp);
         }
-    }
+    }        
+        // dev print
+        std::puts("\nInput Square:");
+        target.printSquare();
     
-    // Find sums of rows/columns/diagonals of input square
+    // Build sum vector (contains likely magic numbers)
     target.findSums();
-    std::vector<int> sum_vector;
-    for(int i=0; i<3; i++){
-        for(char c : {'r','c','d'} ){
-            // Break out of invalid getSum parameters
-            if( c == '0' ){
-                break;
-            } else if( c == 'd' && i == 2 ){
-                break;
-            }
-            if( sum_vector.empty() ) {
-                sum_vector.push_back( target.getSum(c,i) );
-            } else if( std::find( sum_vector.begin(), sum_vector.end(), target.getSum(c,i) ) == sum_vector.end() ){
-                sum_vector.push_back( target.getSum(c,i) );
-            }
+    std::vector<int> sum_vector = target.buildSumVector();
+    
+        // dev print
+        std::puts("\nPossible magic numbers:");
+        for(int i=0; i < sum_vector.size(); i++){
+            std::printf("%d\n", sum_vector[i]);
         }
+
+    // Find min cost
+    int cost = 0, min_cost = 99999;
+    for(int i=0; i < sum_vector.size(); i++){
+        MagicSquare temp;
+        cost = fixMagicSquare(target, temp, sum_vector[i]);
+        if( cost < min_cost ) min_cost = cost;
     }
-    target.printSquare();
+    std::printf("Min Cost: %d\n", min_cost);
+    
+    
+
     return 0;
 }
     
