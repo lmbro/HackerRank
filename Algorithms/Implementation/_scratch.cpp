@@ -19,8 +19,10 @@ int main(){
     }
     for(int num=1; num<=9; num++){
         for(int iter=0; iter<=points.size(); iter++){
-            switch(iter){
-                case 0:
+            for(int p=0; p<points.size(); p++){
+                vector[points[p].x][points[p].y] = num;
+            }
+            
                     
                     
 
