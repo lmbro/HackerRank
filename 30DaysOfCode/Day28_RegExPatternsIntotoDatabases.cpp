@@ -20,15 +20,34 @@ Print an alphabetically-ordered list of first names for every user with a gmail 
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <regex>
 
 int main() {
 
     int n;
     std::cin >> n;
 
+    std::vector<std::string> gmail_users;
+    std::regex pattern( ".+@gmail\\.com$" );
+
     for( int i = 0; i < n; i++ ) {
-        string name, email;
+
+        std::string name, email;
         std::cin >> name >> email;
+
+        if( std::regex_match( email, pattern ) ) {
+            gmail_users.push_back( name );
+        }
+    }
+
+    std::sort( gmail_users.begin(), gmail_users.end() );
+    for( int i = 0; i < gmail_users.size(); i++ ){
+        std::cout << gmail_users[i] << std::endl;
+    }
+
+    return 0;
+}
         
 /*
 ***** Sample Input *****
