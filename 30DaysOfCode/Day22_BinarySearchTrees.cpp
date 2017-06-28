@@ -17,7 +17,7 @@ The locked stub code in your editor will print the integer returned by your getH
 #include <iostream>
 #include <cstddef>
 
-using namespace std;	
+using namespace std;
 
 class Node{
     public:
@@ -32,7 +32,7 @@ class Node{
 };
 class Solution{
     public:
-  		Node* insert(Node* root, int data) {
+  	Node* insert(Node* root, int data) {
             if(root == NULL) {
                 return new Node(data);
             }
@@ -52,14 +52,14 @@ class Solution{
         }
 // END CODE SEGMENT
 // **********************************************
-		int getHeight(Node* root){
+	int getHeight(Node* root){
 
             int left_height = 0;
             int right_height = 0;
 
             if( root->left ) left_height += 1 + getHeight( root->left );
             if( root->right ) right_height += 1 + getHeight( root->right );
-            
+
             if( left_height > right_height ){
                 return left_height;
             } else {
