@@ -42,6 +42,8 @@ You are not responsible for printing any output to stdout. Your function must re
 
 */
 
+#include <cstdio>
+
 /* Hidden stub code will pass a root argument to the function below. Complete the function to solve the challenge. Hint: you may want to write one or more helper functions.  
 
 The Node struct is defined as follows:
@@ -51,28 +53,45 @@ The Node struct is defined as follows:
       Node* right;
    }
 */
-    bool checkBST( Node* root ) {
+    bool checkLeft( Node* node, int root_data ) {
 
-        bool right, left; 
+        if( node == NULL ) { return true; }
+
+        if( node->data < root_data ) {
+            return ( checkLeft( node->left, root_data ) && checkLeft( node->right, root_data) );
+        } else {
+            return false;
+        }
+    }
+    
+    bool checkRight( Node* node, int root_data ) {
+
+        if( node == NULL ) { return true; }
+
+        if( node->data > root_data ) {
+            return ( checkRight( node->left, root_data ) && checkRight( node->right, root_data) );
+        } else {
+            return false;
+        }
+    }
+
+    bool checkBST( Node* root ) {
 
         if( root == NULL ) { return true; }
 
-        if( root->right == NULL ) { 
-            right = true; 
+        if( checkLeft( root->left, root->data ) && checkRight( root->right, root->data ) ) {
+            return( checkBST( root->left ) && checkBST( root->right ) );
         } else {
-            right = root->data < root->right->data;
-        }
-
-        if( root->left == NULL ) { 
-            left = true; 
-        } else {
-            left = root->data > root->left->data;
-        }
-
-        if( !right || !left ) {
             return false;
-        } else {
-            return ( checkBST(root->left) && checkBST(root->right) );
         }
 
     }
+
+
+int main() {
+
+    std::puts( "This is not meant to be compiled and run. This is a code segment - the main function for which this function is written was hidden by HackerRank and not included in this file. I'm including it any for completeness." );
+    return 0;
+}
+    
+    
