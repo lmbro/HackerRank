@@ -4,7 +4,7 @@ Forming a Magic Square.cpp
 Purpose: HackerRank Challenge, Forming a Magic Square
 
 Author: Lucas Brown
-Version: 1.0 6/29/2017
+Version: 0.1 6/29/2017
 
 Some challenges have code provided that is necessary to complete the challenge. Any code provided by HackerRank and not written by Lucas Brown will be identified.
 
@@ -60,7 +60,7 @@ Sample Output 1
 */
 
 
-#include <iostream>
+#include <cstdio>
 #include <vector>
 
 class Square {
@@ -73,37 +73,46 @@ class Square {
         bool is_magic;
     public:
         Square();
+        
         void setIndex( int i, int j, int value );
         void setMagicNumber( int n );
         void findSums();
         bool testMagic();
+
+        int getIndex( int i, int j );
+        int getMagicNumber();
         bool isMagic();
 };
 
 int main() {
 
-    std::vector< std::vector<int> > square( 3, std::vector<int>(3) );
-    for( int i = 0; i < 3; i++ ) {
-        std::cin >> square[i][0] >> square[i][1] >> square[i][2];
-    }
+    Square input_square;
     
     for( int i = 0; i < 3; i++ ) {
-        std::cout << square[i][0] << ' ' << square[i][1] << ' ' << square[i][2] << '\n';
+        for( int j = 0; j < 3; j++ ) {
+            int val;
+            std::scanf( "%d", &val );
+            input_square.setIndex( i, j, val );
+        }
     }
-    /*
-    std::cout << "Magic square? " << isMagic(square) << std::endl;
-    /**/
+
+    // Display Input square
+    std::puts( "\nInput:" );
+    for( int i = 0; i < 3; i++ ) {
+        std::printf( "%d %d %d\n", input_square.getIndex(i,0), input_square.getIndex(i,1), input_square.getIndex(i,2) );
+    } /**/    
 }
 
 
 Square::Square() {
     
-    std::vector< std::vector<int> > square( 3, std::vector<int>(3) );
-    int row_sum[] = { 0, 0, 0 };
-    int col_sum[] = { 0, 0, 0 };
-    int dia_sum[] = { 0, 0 };
+    square.resize( 3, std::vector<int>(3) );
+    std::vector< std::vector<int> > square( 3, std::vector<int>(3,0) );
+    row_sum[0] = row_sum[1] = row_sum[2] = 0;
+    col_sum[0] = col_sum[2] = col_sum[2] = 0;;
+    dia_sum[0] = dia_sum[2] = 0;
     
-    int magic_number = 0;
+    magic_number = 0;
     bool is_magic = false;
 }
 
@@ -154,6 +163,16 @@ bool Square::testMagic() {
 
     is_magic = true;
     return true;
+}
+
+int Square::getIndex( int i, int j ) {
+
+    return square[i][j];
+}
+    
+int Square::getMagicNumber() {
+    
+    return magic_number;
 }
 
 bool Square::isMagic() {
