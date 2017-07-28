@@ -18,4 +18,4 @@ Rather than making a new repository to keep languages separate, this one reposit
 
 ## Favorite Challenges!
 
-Mathematics / Leondardo's Prime Factors
+Mathematics / Fundamentals / Leondardo's Prime Factors
