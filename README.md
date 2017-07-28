@@ -8,7 +8,9 @@ Challenge descriptions, including these contraints, are included in a large comm
 
 ## Favorite Challenges!
 
-[Leondardo's Prime Factors](/Mathematics/Fundamentals/LeonardosPrimeFactors.java "Leonardo's Prime Factors")
+|Solution | HackerRank Link |
+|---------|:---------------:|
+| [Leondardo's Prime Factors](/Mathematics/Fundamentals/LeonardosPrimeFactors.java "Solution") | [Problem](https://www.hackerrank.com/challenges/leonardo-and-prime/problem "HackerRank") |
 
 ## Organization and Naming Convention
 
