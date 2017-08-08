@@ -8,9 +8,10 @@ Challenge descriptions, including these contraints, are included in a large comm
 
 ## Favorite Challenges!
 
-|Solution | HackerRank Link |
-|---------|:---------------:|
-| [Leondardo's Prime Factors](/Mathematics/Fundamentals/LeonardosPrimeFactors.java "Solution") | [Problem](https://www.hackerrank.com/challenges/leonardo-and-prime/problem "HackerRank") |
+|Solution | HackerRank Link | Comment |
+|---------|:---------------:|:-------:|
+| [Leondardo's Prime Factors](/Mathematics/Fundamentals/LeonardosPrimeFactors.java "Solution") | [Problem](https://www.hackerrank.com/challenges/leonardo-and-prime/problem "HackerRank") | |
+| [Java 1D Array (Part 2)](/LanguageTrack_Java/DataStructures/Java1DArray_Part2.java "Solution") | [Problem](https://www.hackerrank.com/challenges/java-1d-array/problem "Solution") | Great learning experience! |
 
 ## Organization and Naming Convention
 
