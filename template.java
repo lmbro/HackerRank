@@ -21,12 +21,12 @@ Input Format
 -------------
 
 
-Constraints
-------------
-
-
 Output Format
 --------------
+
+
+Constraints
+------------
 
 
 Sample Input
@@ -34,7 +34,6 @@ Sample Input
 
 Sample Output
 --------------
-
 
 */
 
