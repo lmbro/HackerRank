@@ -4,7 +4,7 @@ File:    LisasWorkbook.java
 Purpose: HackerRank Challenge, Lisa's Workbook
 Author:  Lucas Brown (LMBRO)
 Version: 1.0
-Date:    September 27, 2017
+Date:    September 28, 2017
 
 Some challenges have code provided that is necessary to complete the challenge. Any code provided by HackerRank and not written by Lucas Brown will be identified.
 
@@ -55,3 +55,23 @@ Sample Output
 4
 
 */
+
+import java.util.Scanner;
+
+public class LisasWorkbook {
+
+    public static void main( String[] args ) {
+
+        Scanner scan = new Scanner( System.in );
+        int chapters = scan.nextInt();
+        int maxProbsPerPage = scan.nextInt();
+        
+        // This problem is one-indexed
+        int[] problems = new int[chapters+1];
+        for( int i = 1; i <= chapters; i++ ) {
+            problems[i] = scan.nextInt();
+        }
+        
+            
+    }
+}
