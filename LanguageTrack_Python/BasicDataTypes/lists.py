@@ -1,53 +1,108 @@
-##### Background #####
-# Consider a list (list = []). You can perform the following commands:
-#   insert i e  (insert integer e at position i)
-#   print       (print the list)
-#   remove e    (delete the first occurence of integer e)
-#   append e    (insert integer e at the end of the list)
-#   sort        (sort the list)
-#   pop         (pop the last element from the list)
-#   reverse     (reverse the list)
-
-##### Task #####
-# Initialize your list and read in the value of n followed by n lines of commands where each command will be of the 7 types listed above. Iterate through each comand in order and perform the corresponding operation on your list.
-
-##### Input Format #####
+#
+# File:    lists.py
+# Purpose: HackerRank Python Track, Lists
+# Author:  Lucas Brown
+# Date:    October 19, 2017
+# Python:  3.5.3
+#
+# Some challenges have code provided that is necessary to complete the challenge. Any code provided by HackerRank and not written by Lucas Brown will be identified.
+#
+#
+# Background
+# -----------
+# Consider a list ( list = [] ). You can perform the following commands:
+#
+#       insert i e      Insert integer e at position i.
+#       print           Print the list.
+#       remove e        Delete the first occurrence of integer e.
+#       append e        Insert integer e at the end of the lsit.
+#       sort            Sort the list.
+#       pop             Pop the last element from the list.
+#       reverse         Reverse the list.
+#
+#
+# Task
+# -----
+# Initialize your list and read in the value of n followed by n lines of commands where each comand will be of the 7 types listed above. Iterate through each command in order and perform the corresponding operation on your list.
+#
+#
+# Input Format
+# -------------
 # The first line contains an integer, n, denoting the number of commands.
-# Each line i of the subsequent lines contains one of the commands described above
-
-##### Constraints #####
-# The elements added to the list must be integers
-
-##### Output Format #####
-# For each commands of type print, print the list on a new line
-
-if __name__ == "__main__":
-    n = int( input() )
-    list_a = []
-    for i in range(0,n):
-        cmd = input()
-        cmd = cmd.split()
-        if( cmd[0] == 'print'):
-            print (list_a)
-        else:
-            eval( 'list_a.' + cmd[0] + '('+','.join(cmd[1:])+')' )
-
-    
-##### Sample Input #####
+# Each line i of the n subsequent lines contains one of the commands described above.
+#
+#
+# Output Format
+# --------------
+# For each command of type print, prin the list ona  new line
+#
+#
+# Constraints
+# ------------
+# The elements added to the list must be integers.
+#
+#
+# Sample Input
+# -------------
 # 12
 # insert 0 5
 # insert 1 10
 # insert 0 6
-# print
+# print 
 # remove 6
 # append 9
 # append 1
-# sort
+# sort 
 # print
 # pop
 # reverse
 # print
-##### Expected Output #####
+#
+#
+# Sample Output
+# --------------
 # [6, 5, 10]
 # [1, 5, 9, 10]
 # [9, 5, 1]
+#
+
+if __name__ == "__main__":
+
+    n = int( input() )
+    py_list = []
+
+    for i in range(0, n):
+
+        user_input = input().split(" ")
+
+        if( user_input[0] == "insert" ):
+            
+            py_list.insert( int(user_input[1]), int(user_input[2]) )
+
+        elif( user_input[0] == "append" ):
+
+            py_list.append( int(user_input[1]) )
+
+        elif( user_input[0] == "remove" ):
+
+            py_list.remove( int(user_input[1]) )
+
+        elif( user_input[0] == "pop" ):
+
+            py_list.pop()
+
+        elif( user_input[0] == "sort" ):
+
+            py_list.sort()
+
+        elif( user_input[0] == "reverse" ):
+
+            py_list.reverse()
+
+        elif( user_input[0] == "print" ):
+
+            print( py_list )
+
+        else:
+
+            print( "ERROR: Command not found" )
