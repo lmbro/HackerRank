@@ -4,7 +4,7 @@ File:    CavityMap.java
 Purpose: HackerRank Challenge, Cavity Map
 Author:  Lucas Brown
 Version: 1.0
-Date:    September 20, 2017
+Date:    October 16, 2017
 
 Some challenges have code provided that is necessary to complete the challenge. Any code provided by HackerRank and not written by Lucas Brown will be identified.
 
@@ -68,16 +68,17 @@ public class CavityMap {
 
         for( int i = 0; i < grid_size; i++ ) {
 
-            int temp = scan.nextInt();
-            int j = grid_size - 1;
-            while( temp > 0 ) {
-                grid[i][j] = temp % 10;
-                temp /= 10;
-                j--;
+            String row = scan.next();
+
+            for( int j = 0; j < grid_size; j++ ) {
+
+                grid[i][j] = Integer.parseInt( row.substring(j,j+1) );
             }
         }
         scan.close();
 
+        //printInput( grid, grid_size );
+        
         // Output
 
         for( int i = 0 ; i < grid_size; i++ ) {
@@ -89,7 +90,7 @@ public class CavityMap {
                     System.out.printf( "%d", grid[i][j] );
                 }
             }
-            System.out.printf( "%n" );
+            System.out.println();
         }
     }
 
@@ -112,4 +113,20 @@ public class CavityMap {
         
         return true;
     }
+
+    /**
+     * Used for testing input only
+     * I had probelms with large grid sizes ( n = 100 ), so i was testing different ways to deal with the input
+     */
+    private static void printInput( int[][] grid, int grid_size ) {
+
+        for( int i = 0; i < grid_size; i++ ) {
+            for( int j = 0; j < grid_size; j++ ) {
+
+                System.out.printf( "%d ", grid[i][j] );
+            }
+            System.out.println();
+        }
+    }
+
 }
