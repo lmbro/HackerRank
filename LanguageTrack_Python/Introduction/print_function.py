@@ -1,6 +1,6 @@
 #
-# File:    loops.py
-# Purpose: HackerRank Python Track, Loops
+# File:    print_function.py
+# Purpose: HackerRank Python Track, Print Function
 # Author:  Lucas Brown
 # Date:    October 18, 2017
 # Python:  3.5.3
@@ -10,41 +10,37 @@
 #
 # Task
 # -----
-# Read an integer N. For all non-negative integers i < N, print i^2. 
+# Read an integer N. Without using any string methods, try to print the following:
 #
+# 123..N
+#
+# Note that "..." represents the values in between.
 #
 # Input Format
 # -------------
-# The first and only line contains the integer, N.
+# The first line contains an integer N.
 #
 #
 # Output Format
 # --------------
-# Print N lines, one corresponding to each i.
-#
-#
-# Constraints
-# ------------
-# 1 <= N <= 20
+# Output the answer as explained in the task.
 #
 #
 # Sample Input
 # -------------
-# 5
+# 3
 #
 #
 # Sample Output
 # --------------
-# 0
-# 1
-# 4
-# 9
-# 16
+# 123
 #
 
 if __name__ == '__main__':
 
     n = int( input() )
 
-    for i in range(0, n):
-        print( i*i )
+    for i in range(1, n+1):
+        print( i, sep='', end='' )
+
+    print()
