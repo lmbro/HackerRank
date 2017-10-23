@@ -2,7 +2,7 @@
 # File:    string_validators.py
 # Purpose: HackerRank Python Track, String Validators
 # Author:  Lucas Brown
-# Date:    October 20, 2017
+# Date:    October 22, 2017
 # Python:  3.5.3
 #
 # Some challenges have code provided that is necessary to complete the challenge. Any code provided by HackerRank and not written by Lucas Brown will be identified.
@@ -61,8 +61,31 @@ if __name__ == "__main__":
 
     string = input().strip()
 
-    print( string.isalnum() )
-    print( string.isalpha() )
-    print( string.isdigit() )
-    print( string.islower() )
-    print( string.isupper() )
+    digit = False
+    lower = False
+    upper = False
+
+    for char in string:
+
+        if( not digit ): digit = char.isdigit()
+        
+        if( not lower ): lower = char.islower()
+        
+        if( not upper ): upper = char.isupper()
+
+        if( digit and lower and upper ): break
+
+    # Alphanumeric ( a-z, A-Z, 0-9 )
+    print( ( lower or upper or digit ) )
+
+    # Alphabetic ( a-z, A-Z )
+    print( ( lower or upper ) )
+
+    # Digits ( 0-9 )
+    print( digit )
+
+    # Lowercase ( a-z )
+    print( lower )
+
+    # Uppercase ( A-Z )
+    print( upper )
