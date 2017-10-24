@@ -9,7 +9,7 @@
 #
 # File:    text_alignment.py
 # Purpose: HackerRank Python Track, Text Alignment
-# Author:  See READ ME
+# Author:  See READ ME section(s)
 # Date:    October 22, 2017
 # Python:  3.5.3
 #
