@@ -52,3 +52,30 @@ Sample Output
 #----------------------------------------------------------------
 #            END (1/1): Code provided by HackerRank
 #----------------------------------------------------------------
+
+
+
+#-------------------------------------------------------------------------------------------------------------
+# Code below this line has been copied from other users (see docstrings for credit) for educational purposes.
+#-------------------------------------------------------------------------------------------------------------
+
+def problem_tester_solution():
+    """ The solution written by the HackerRank problem tester, <USER>.
+        Viewed after my code wae was written in full, submitted, and accepted as a solution. 
+        Replicated here for educational purposes. 
+
+    Notes (<USER>):
+
+    Notes (lmbro):
+    """
+
+
+def other_solution():
+    """ The solution written by HackerRank user <USER>, posted on the discussion forum.
+        Viewed after my code wae was written in full, submitted, and accepted as a solution. 
+        Replicated here for educational purposes. 
+
+    Notes (<USER>):
+
+    Notes (lmbro):
+    """

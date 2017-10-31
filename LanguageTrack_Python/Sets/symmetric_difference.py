@@ -1,7 +1,7 @@
 '''
 File:    symmetric_difference.py
 Purpose: HackerRank Python Track, Symmetric Difference
-Author:  Lucas Brown
+Author:  Lucas Brown (lmbro)
 Date:    October 31, 2017
 Python:  3.5.3
 
@@ -147,3 +147,39 @@ if __name__ == "__main__":
     sort_set = sorted( M.symmetric_difference(N) )
 
     for el in sort_set: print(el)
+
+
+
+#-------------------------------------------------------------------------------------------------------------
+# Code below this line has been copied from other users (see docstrings for credit) for educational purposes.
+#-------------------------------------------------------------------------------------------------------------
+
+def problem_tester_solution():
+    """ The solution written by the HackerRank problem tester, DOSHI.
+        Viewed after my code wae was written in full, submitted, and accepted as a solution. 
+        Replicated here for educational purposes. 
+
+    Notes (DOSHI):
+        ^ can be used to computer symmetric difference
+        
+    Notes (lmbro): I personally prefer .symmetric_difference for clarity
+        Code that is written only once may be read hundreds of times, so write code that easier to read, not code that is easier to type.
+    """
+
+    M = raw_input();m = raw_input().split()
+    N = raw_input();n = raw_input().split()
+
+    print "\n".join(sorted(list(set(m) ^ set(n)),key=int))
+
+
+def other_solution():
+    """ The solution written by HackerRank user Jlookup, posted on the discussion forum.
+        Viewed after my code wae was written in full, submitted, and accepted as a solution. 
+        Replicated here for educational purposes. 
+
+    Notes (lmbro):
+        This solution is also more 'Pythonic' than my own, however, as stated, I currently prefer clearer code.
+    """
+
+    a,b = [set(input().split()) for _ in range(4)][1::2]
+    print(*sorted(a^b, key=int), sep='\n')
